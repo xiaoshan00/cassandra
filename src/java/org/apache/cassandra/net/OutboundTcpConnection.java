@@ -470,6 +470,7 @@ public class OutboundTcpConnection extends FastThreadLocalThread
                     // or if the same version the handshake will finally succeed
                     logger.trace("Target max version is {}; no version information yet, will retry", maxTargetVersion);
                     disconnect();
+		    Uninterruptibles.sleepUninterruptibly(OPEN_RETRY_DELAY, TimeUnit.MILLISECONDS);
                     continue;
                 }
                 else
@@ -496,6 +497,7 @@ public class OutboundTcpConnection extends FastThreadLocalThread
                     finally
                     {
                         disconnect();
+			Uninterruptibles.sleepUninterruptibly(OPEN_RETRY_DELAY, TimeUnit.MILLISECONDS);
                         return false;
                     }
                 }
